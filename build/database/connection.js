@@ -4,8 +4,8 @@ const sequelize_1 = require("sequelize");
 // const db = new Sequelize('bdtelenor' , 'root', '', {
 //     host: 'localhost',
 //     dialect: 'mysql',
-//     // port: 3307,
-//     // logggin: false,
+//     port: 3307,
+//     logggin: false,
 // });
 //PRO
 const db = new sequelize_1.Sequelize(process.env.DB_DATABASE || 'nrsi45pnjgylc4wv', process.env.DB_USER || 'u03804lj5kn69i3t', process.env.DB_PASSORD || 'skx7rs5pgfpq5tr5', {
