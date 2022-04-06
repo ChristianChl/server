@@ -40,7 +40,8 @@ export const getVentasByDates  = async (req:Request, res:Response) =>{
             where: {
                 createdAt: {
                 //   [Op.between]: ["2021-07-14T00:00:00.000Z", "2021-07-19T21:03:41.000Z"]
-                [Op.between]: [body.createdAt, body.endDate]
+                // [Op.between]: [body.createdAt, body.endDate]
+                [Op.between]: [body.ven_fechaHora, body.endDate]
                 }
               },
             include:[
