@@ -61,7 +61,7 @@ const getHistorialProductosByDates = (req, res) => __awaiter(void 0, void 0, voi
             where: {
                 endDate: {
                     // [Op.between]: [body.createdAt, body.endDate]
-                    [sequelize_1.Op.between]: [body.endDate, body.createdAt]
+                    [sequelize_1.Op.between]: [body.createdAt, body.endDate]
                 },
                 id_producto: body.id_producto
             },

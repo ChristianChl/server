@@ -56,7 +56,7 @@ export const getHistorialProductosByDates  = async (req:Request, res:Response) =
             where: {
                 endDate: {
                 // [Op.between]: [body.createdAt, body.endDate]
-                [Op.between]: [body.endDate, body.createdAt]
+                [Op.between]: [body.createdAt, body.endDate]
                 },
                 id_producto: body.id_producto
 
