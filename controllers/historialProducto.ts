@@ -54,7 +54,7 @@ export const getHistorialProductosByDates  = async (req:Request, res:Response) =
     try{
         const historialProducto = await HistorialProducto.findAll({
             where: {
-                createdAt: {
+                endDate: {
                 // [Op.between]: [body.createdAt, body.endDate]
                 [Op.between]: [body.endDate, body.createdAt]
                 },
