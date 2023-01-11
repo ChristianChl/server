@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Usuario from '../models/usuario';
 import bcrypt from "bcrypt";
-import { generarJwt } from '../helpers/jwt';
 
 
 export const loginUsuario = async (req: Request, res: Response) => {
@@ -11,30 +10,18 @@ export const loginUsuario = async (req: Request, res: Response) => {
 
         const usuario: any = await Usuario.findOne({
             where: {
-                us_login: body.us_login
-            }
-        });
-        const usuarioInactivo: any = await Usuario.findOne({
-            where: {
-                us_login: body.us_login,
-                us_activo: 1
+                user: body.user
             }
         });
 
-        console.log(usuario);
         if (!usuario) {
             return res.status(400).json({
-                msg: 'El usuario no existe: ' + body.us_login
+                msg: 'El usuario no existe: ' + body.user
             });
 
         }
-        if (!usuarioInactivo) {
-            return res.status(400).json({
-                msg: 'El usuario se encuentra inactivo: ' + body.us_login
-            });
-        }
 
-        const validPassword = bcrypt.compareSync(body.us_clave, usuario.us_clave);
+        const validPassword = bcrypt.compareSync(body.password, usuario.password);
 
         if (!validPassword) {
             return res.status(400).json({
@@ -43,18 +30,12 @@ export const loginUsuario = async (req: Request, res: Response) => {
             });
         }
 
-        const token = await generarJwt ( usuario.id_usuario, usuario.us_nombres );
 
         // Respuesta del servicio
 
         return res.json({
             ok: true,
-            uid: usuario.id_usuario,
-            name: usuario.us_nombres,
-            surnames: usuario.us_apellidos,
-            avatar: usuario.avatar,
-            email: usuario.us_email,
-            token
+            name: usuario.fullName,
         })
 
 
@@ -64,31 +45,6 @@ export const loginUsuario = async (req: Request, res: Response) => {
             msg: 'Hable con el administrador',
         });
     }
-
-}
-
-export const revalidarToken = async (req: Request, res: Response) => {
-
-    const { body } = req;
-  
-    //Generar el JWT
-    const usuario: any = await Usuario.findOne({
-        where: {
-            id_usuario: body.id_usuario,
-        }
-    });
-
-    const token = await generarJwt(usuario.id_usuario, usuario.us_nombres);
-
-    return res.json({
-        ok: true,
-        uid: usuario.id_usuario,
-        name: usuario.us_nombres,
-        surnames: usuario.us_apellidos,
-        avatar: usuario.avatar,
-        email: usuario.us_email,
-        token
-    });
 
 }
 
